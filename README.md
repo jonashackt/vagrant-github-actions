@@ -18,21 +18,12 @@ So let's first add a [Vagrantfile](Vagrantfile) like this:
 
 ```
 Vagrant.configure("2") do |config|
-    config.vm.box = "ubuntu/focal64"
+    config.vm.box = "generic/ubuntu1804"
 
     config.vm.define 'ubuntu'
 
-    # Vagrant boot needs more time on GitHub Actions (https://github.com/jonashackt/vagrant-github-actions/runs/1926207530?check_suite_focus=true)
-    config.vm.boot_timeout = 1800
-
     # Prevent SharedFoldersEnableSymlinksCreate errors
     config.vm.synced_folder ".", "/vagrant", disabled: true
-
-    config.vm.provider :virtualbox do |vb|
-        vb.name = 'ubuntu'
-        vb.memory = 128
-        vb.cpus = 1
-    end
 end
 ```
 
@@ -44,16 +35,20 @@ name: vagrant-up
 on: [push]
 
 jobs:
-  build:
+  vagrant-up:
     runs-on: macos-10.15
 
     steps:
       - uses: actions/checkout@v2
 
-      - run: |
-          vagrant --version
-          vagrant up
-          vagrant ssh -c "echo 'hello world!'"
+      - name: Show Vagrant version
+        run: vagrant --version
+
+      - name: Run vagrant up
+        run: vagrant up
+
+      - name: ssh into box after boot
+        run: vagrant ssh -c "echo 'hello world!'"
 
 ```
 

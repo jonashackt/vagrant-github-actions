@@ -3,7 +3,7 @@ name: vagrant-up
 on: [push]
 
 jobs:
-  build:
+  vagrant-up:
     runs-on: macos-10.15
 
     steps:
