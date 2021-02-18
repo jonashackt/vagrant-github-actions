@@ -9,8 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Run vagrant up and ssh into box after boot
-      run: |
-        vagrant --version
-        vagrant up
-        vagrant ssh -c "echo 'hello world!'"
+    - name: Show Vagrant version
+      run: vagrant --version
+
+    - name: Run vagrant up
+      run: vagrant up
+
+    - name: ssh into box after boot
+      run: vagrant ssh -c "echo 'hello world!'"
