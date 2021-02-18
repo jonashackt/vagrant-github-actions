@@ -13,5 +13,7 @@ Vagrant.configure("2") do |config|
         vb.name = 'ubuntu'
         vb.memory = 128
         vb.cpus = 1
+        vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
+        vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
     end
 end
